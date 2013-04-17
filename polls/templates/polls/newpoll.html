@@ -1,0 +1,50 @@
+<html>
+	<head>
+		<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+	</head>
+	
+<body>
+	
+<form action="{% url 'polls:addpoll' %}" method="post">{% csrf_token %}
+	<input type="submit" value="submit poll" /><p>
+
+	<label>Input Question</label><p>
+	<input type="text" multiline="true" id="question" name="question" />
+	<p>
+	<label>Input Choices</label>
+	<div id="choice" >
+		<input id="num_input" name="num_input" type="hidden" value="0"/>
+		
+	</div>
+
+</form>
+</body>
+
+<script> 
+$(document).ready(function () {
+
+	$('<div id="addchoice">add choice</div>').appendTo('body')
+	$('<div id="rmchoice">remove choice</div>').appendTo('body')
+	
+	$num_input = $("#num_input")
+	$num_input.val($num_input.val()-(-1))
+	$('<input type="text" multiline="true" name="choice'+ $("#num_input").val() +'"/>').appendTo('#choice')
+
+	$('#addchoice').click(function()
+	{
+		$num_input = $("#num_input")
+		$num_input.val($num_input.val()-(-1))
+		var input = $('<br><input type="text" multiline="true" name="choice' + $("#num_input").val() + '"/>')
+		$('#choice').append(input)
+		
+		$('#rmchoice').click(function(e)
+		{
+		    $(input).remove()
+		    $num_input = $("#num_input")
+			$num_input.val(0)
+		})
+	})
+});
+</script>
+
+</html>
